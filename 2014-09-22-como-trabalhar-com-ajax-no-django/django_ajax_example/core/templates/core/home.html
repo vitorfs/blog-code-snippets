@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <form>
+    <div>
+      <label for="estado">Estado</label>
+      <select name="estado" id="estado">
+        <option value="">Selecione...</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="SP">São Paulo</option>
+      </select>
+    </div>
+    <div>
+      <label for="cidade">Cidade</label>
+      <select name="cidade" id="cidade">
+        <option value="">Selecione...</option>
+      </select>
+    </div>
+  </form>
+
+  <script>
+    $(function () {                     // Aguarda a página carregar
+      $("#estado").change(function () { // Associa uma função ao evento de change
+        var estado = $(this).val();     // Armazena o estado selecionado
+        $.ajax({                        // Inicia a definição da requisição
+          url: '/filtrar_cidade/',      // Define a url da requisição
+          data: {                       // Definição dos dados que serão enviados
+            'estado': estado            // Adiciona dados a serem enviados
+          },                            
+          success: function (data) {    // Método de sucesso da requisição
+            $("#cidade").html(data);    // Alimenta a dropdown list #cidades
+          }
+        });
+      });
+    });
+  </script>
+{% endblock main %}
